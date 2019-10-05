@@ -1,6 +1,7 @@
-import React, {useState} from "react"
+import React, {useState, useHistory} from "react"
+import {axiosWithAuth} from "../utils/axiosWithAuth"
 
-const Login = () => {
+const Login = (props) => {
 
     const [userLogin, setUserLogin] = useState({})
 
@@ -12,7 +13,13 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
         console.log(userLogin)
-        setUserLogin({username: "", password: ""})
+        axiosWithAuth()
+            .post("./login", userLogin)
+            .then(res => {
+                localStorage.setItem('token', res.data.payload)
+                props.history.push('/protected');
+            })
+        // setUserLogin({username: "", password: ""})
     }
 
     return(
@@ -23,14 +30,14 @@ const Login = () => {
                     name="username"
                     placeholder="username"
                     onChange={handleChanges}
-                    value={userLogin.username}
+                    // value={userLogin.username}
                 />
                 <input 
                     type="password"
                     name="password"
                     placeholder="password"
                     onChange={handleChanges}
-                    value={userLogin.password}
+                    // value={userLogin.password}
                 />
                 <button type="submit" >Let's Go!</button>  
             </form>     
