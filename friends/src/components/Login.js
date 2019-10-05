@@ -1,4 +1,4 @@
-import React, {useState, useHistory} from "react"
+import React, {useState} from "react"
 import {axiosWithAuth} from "../utils/axiosWithAuth"
 
 const Login = (props) => {
@@ -17,7 +17,7 @@ const Login = (props) => {
             .post("./login", userLogin)
             .then(res => {
                 localStorage.setItem('token', res.data.payload)
-                props.history.push('/protected');
+                props.history.push('/friends');
             })
         // setUserLogin({username: "", password: ""})
     }
